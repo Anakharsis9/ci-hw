@@ -24,8 +24,6 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
         run: npm run e2e
-      - name: Run eslint
-        run: npm run lint
   run-eslint:
     runs-on: ubuntu-latest
     steps:
