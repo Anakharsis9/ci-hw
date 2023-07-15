@@ -1,0 +1,9 @@
+name: learning
+on: [workflow_dispatch]
+jobs:
+  learn-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+      - run: echo hello world
+    
