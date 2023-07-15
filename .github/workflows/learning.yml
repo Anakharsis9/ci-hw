@@ -1,9 +1,13 @@
-name: learning
-on: [workflow_dispatch]
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  learn-job:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - name: print
-        run: echo hello world
-    
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
