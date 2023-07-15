@@ -2,7 +2,7 @@ name: check autotests
 on: 
   pull_request:
     branches: [ master ]
-    types: [ opened, edited ]
+    types: [ opened, edited, synchronize ]
 jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
