@@ -4,7 +4,7 @@
     "homepage": ".",
     "private": true,
     "scripts": {
-        "prepare": "husky install",
+        "prepare": "npx husky install",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "eject": "react-scripts eject",
