@@ -1,4 +1,4 @@
-name: test-react-app
+name: check autotests
 on: 
   pull_request:
     branches: [ master ]
@@ -13,3 +13,9 @@ jobs:
         run: npm ci
       - name: Run unit tests
         run: npm test
+      - name: Install playwright
+        run: npx playwright install --with-deps chromium
+      - name: Run e2e tests
+        run: npm run e2e
+      - name: Run eslint
+        run: npm run lint
