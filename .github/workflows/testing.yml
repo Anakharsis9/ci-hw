@@ -1,0 +1,12 @@
+name: test-react-app
+on: [push]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install packages
+        run: npm ci
+      - name: Run unit tests
+        run: npm test
