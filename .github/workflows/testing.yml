@@ -47,10 +47,14 @@ jobs:
       - name: Install playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
-        id: e2e
         run: |
           set +e
           npm run e2e
+      - name: Set exit code to e2e_result
+        if: success() || failure()
+        id: e2e
+        run: |
+          set +e
           if [ "$?" != "0" ]; then
             echo "e2e_result=Test failed" >> $GITHUB_OUTPUT
           else
@@ -66,10 +70,14 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run eslint
-        id: lint
         run: |
           set +e
           npm run lint
+      - name: Set exit code to lint_result
+        if: success() || failure()
+        id: lint
+        run: |
+          set +e
           if [ "$?" != "0" ]; then
             echo "lint_result=Test failed" >> $GITHUB_OUTPUT
           else
