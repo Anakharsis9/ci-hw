@@ -41,10 +41,10 @@ Workflow находиться тут [.github/workflows/release.yml](https://git
 Закомить что нибудь и потом:
 ```sh
 # добавь tag в релизном формате
-git tag v28
+git tag v29
 
 # запушай tag
-git push origin v28
+git push origin v29
 
 ```
 
@@ -53,7 +53,7 @@ git push origin v28
 - запускает workflow тестов, получает статусы прогона тестов
 - в любом случае (успешных/не успешных) тестов запускает создание issue
 - issue создается по шаблону описанному в [.github/ISSUE_TEMPLATE.md](https://github.com/Anakharsis9/ci-hw/blob/master/.github/ISSUE_TEMPLATE.md)
-- Будет создан issue RELEASE v28, c label **RELEASE**, в котором будет:
+- Будет создан issue RELEASE v29, c label **RELEASE**, в котором будет:
   
   - Автор
   - Версия
