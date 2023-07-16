@@ -12,8 +12,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create an issue
-        run: echo "CREATION_DATE=$(date +'%d.%m.%Y %H:%M:%S')" >> $GITHUB_ENV
+      - name: Get creation date
+        run: echo "CREATION_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: Create changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create an issue
         id: create-issue
         uses: JasonEtco/create-an-issue@v2.9.1
@@ -21,10 +26,27 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ github.ref_name }}
           author: ${{ github.actor }}
+          changelog: ${{ steps.changelog.outputs.changelog }}
         with:
             update_existing: true
             search_existing: all
       - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
   run-autotests:
     uses: ./.github/workflows/testing.yml
+  # update-issue: 
+  #   needs: [create-issue, run-autotests]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Update an issue
+  #       id: update-issue
+  #       uses: JasonEtco/create-an-issue@v2.9.1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         version: ${{ github.ref_name }}
+  #         author: ${{ github.actor }}
+  #       with:
+  #           update_existing: true
+  #           search_existing: all
       
