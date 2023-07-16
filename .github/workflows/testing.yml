@@ -2,6 +2,8 @@ name: check autotests
 on:
   workflow_call:
     outputs:
+      unit_link:
+        value: ${{ jobs.run-unit-tests.outputs.workflow_link }}
       unit_result:
         value: ${{ jobs.run-unit-tests.outputs.unit_result }}
       e2e_result:
@@ -29,8 +31,12 @@ jobs:
           else
             echo "unit_result=Test passed" >> $GITHUB_OUTPUT
           fi
+      - name: Set workflow_link
+        id: workflow_link
+        run: echo "workflow_link=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}/jobs/${{github.job}}" >> $GITHUB_OUTPUT
     outputs: 
       unit_result: ${{ steps.unit.outputs.unit_result }}
+      workflow_link: ${{ steps.workflow_link.outputs.workflow_link }}
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
