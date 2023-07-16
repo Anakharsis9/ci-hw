@@ -1,6 +1,13 @@
 name: check autotests
 on:
   workflow_call:
+    outputs:
+      unit_result:
+        value: ${{ jobs.run-unit-tests.outputs.unit_result }}
+      e2e_result:
+        value: ${{ jobs.run-e2e-tests.outputs.e2e_result }}
+      lint_result:
+        value: ${{ jobs.run-eslint.outputs.lint_result }}
   pull_request:
     types: [opened, edited, synchronize]
 jobs:
@@ -14,12 +21,15 @@ jobs:
       - name: Run unit tests
         run: npm test
       - name: Set exit code to unit_result
+        id: unit
         run: |
           if [ "$?" != "0" ]; then
-            echo "lint_result='Test failed'" >> $GITHUB_ENV
+            echo "unit_result='Test failed'" >> $GITHUB_OUTPUT
           else
-            echo "lint_result='Test passed'" >> $GITHUB_ENV
+            echo "unit_result='Test passed'" >> $GITHUB_OUTPUT
           fi
+    outputs: 
+      unit_result: ${{ steps.unit.outputs.unit_result }}
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
@@ -32,12 +42,15 @@ jobs:
       - name: Run e2e tests
         run: npm run e2e
       - name: Set exit code to e2e_result
+        id: e2e
         run: |
           if [ "$?" != "0" ]; then
-            echo "lint_result='Test failed'" >> $GITHUB_ENV
+            echo "e2e_result='Test failed'" >> $GITHUB_OUTPUT
           else
-            echo "lint_result='Test passed'" >> $GITHUB_ENV
+            echo "e2e_result='Test passed'" >> $GITHUB_OUTPUT
           fi
+    outputs: 
+      e2e_result: ${{ steps.e2e.outputs.e2e_result }}
   run-eslint:
     runs-on: ubuntu-latest
     steps:
@@ -48,9 +61,12 @@ jobs:
       - name: Run eslint
         run: npm run lint
       - name: Set exit code to lint_result
+        id: lint
         run: |
           if [ "$?" != "0" ]; then
-            echo "lint_result='Test failed'" >> $GITHUB_ENV
+            echo "lint_result='Test failed'" >> $GITHUB_OUTPUT
           else
-            echo "lint_result='Test passed'" >> $GITHUB_ENV
+            echo "lint_result='Test passed'" >> $GITHUB_OUTPUT
           fi
+    outputs:
+      lint_result: ${{ steps.lint.outputs.lint_result }}
