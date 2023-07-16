@@ -12,7 +12,9 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run unit tests
-        run: npm test && echo "unit_result=$?" > $GITHUB_ENV
+        run: npm test
+      - name: Set exit code to unit_result
+        run: echo "unit_result=$?" > $GITHUB_ENV
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +25,9 @@ jobs:
       - name: Install playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
-        run: npm run e2e && echo "e2e_result=$?" > $GITHUB_ENV
+        run: npm run e2e
+      - name: Set exit code to e2e_result
+        run: echo "e2e_result=$?" > $GITHUB_ENV
   run-eslint:
     runs-on: ubuntu-latest
     steps:
@@ -32,4 +36,6 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run eslint
-        run: npm run lint && echo "lint_result=$?" > $GITHUB_ENV
+        run: npm run lint
+      - name: Set exit code to lint_result
+        run: echo "lint_result=$?" > $GITHUB_ENV
