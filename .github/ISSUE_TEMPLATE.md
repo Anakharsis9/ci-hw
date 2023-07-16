@@ -4,7 +4,7 @@ labels: RELEASE
 ---
 - Автор релиза: {{ env.author }}
 - Версия: {{ env.version }}
-- Дата и время создания: {{ env.CREATION_DATE }}
+- Дата и время создания: {{ env.creation_date }}
 - Changelog:
 
 {{ env.changelog }}
