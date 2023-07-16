@@ -28,7 +28,7 @@ jobs:
         run: echo "tag=$(git describe --tags --abbrev=0 --match 'v*[0-9]')" >> $GITHUB_ENV
       - name: Get issue
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISSUE_TITLE="RELEASE ${{ env.tag }}"
           ISSUE_ID=$(gh issue list --json number,title,labels -q \
