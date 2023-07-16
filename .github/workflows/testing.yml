@@ -47,16 +47,15 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
         id: e2e
-        run: |
-          set +e
-          npm run e2e
-          if [ "$?" != "0" ]; then
-            echo "e2e_result=Test failed" >> $GITHUB_OUTPUT
-          else
-            echo "e2e_result=Test passed" >> $GITHUB_OUTPUT
-          fi
+        run: npm run e2e
+      - name: Set success
+        if: success()
+        run: echo "e2e_result=Test passed" >> $GITHUB_ENV
+      - name: Set fail
+        if: failure()
+        run: echo "e2e_result=Test failed" >> $GITHUB_ENV
     outputs:
-      e2e_result: ${{ steps.e2e.outputs.e2e_result }}
+      e2e_result: ${{ env.e2e_result }}
   run-eslint:
     runs-on: ubuntu-latest
     steps:
@@ -66,13 +65,12 @@ jobs:
         run: npm ci
       - name: Run eslint
         id: lint
-        run: |
-          set +e
-          npm run lint
-          if [ "$?" != "0" ]; then
-            echo "lint_result=Test failed" >> $GITHUB_OUTPUT
-          else
-            echo "lint_result=Test passed" >> $GITHUB_OUTPUT
-          fi
+        run: npm run lint
+      - name: Set success
+        if: success()
+        run: echo "lint_result=Test passed" >> $GITHUB_ENV
+      - name: Set fail
+        if: failure()
+        run: echo "lint_result=Test failed" >> $GITHUB_ENV
     outputs:
-      lint_result: ${{ steps.lint.outputs.lint_result }}
+      lint_result: ${{ env.lint_result }}
