@@ -17,6 +17,7 @@ jobs:
           branch: gh-pages
           folder: build
   get-tag:
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,6 +27,8 @@ jobs:
         id: tag
         run: echo "tag=$(git describe --tags --abbrev=0 --match 'v*[0-9]')" >> $GITHUB_ENV
       - name: Get issue
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           ISSUE_TITLE="RELEASE ${{ env.tag }}"
           ISSUE_ID=$(gh issue list --json number,title,labels -q \
