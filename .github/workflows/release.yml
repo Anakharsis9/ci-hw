@@ -22,6 +22,7 @@ jobs:
         with:
           include: v\d+
           commit-ish: 'HEAD~'
+          skip-unshallow: 'true'
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v4.1.0
