@@ -2,7 +2,7 @@ name: Create release
 permissions:
   contents: read
   issues: write
-on: 
+on:
   push:
     tags:
       - v\d+
@@ -10,17 +10,18 @@ jobs:
   create-issue:
     runs-on: ubuntu-latest
     steps:
+      - name: Get creation date
+        run: echo "CREATION_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Get creation date
-        run: echo "CREATION_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-      - name: 'Get Previous tag'
+      - name: "Get Previous tag"
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: jimschubert/query-tag-action@v1
         with:
-          fallback: v1
+          include: v\d+
+          commit-ish: 'HEAD~'
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v4.1.0
@@ -37,12 +38,12 @@ jobs:
           author: ${{ github.actor }}
           changelog: ${{ steps.changelog.outputs.changelog }}
         with:
-            update_existing: true
-            search_existing: all
-      - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
+          update_existing: true
+          search_existing: all
+      - run: "echo Created ${{ steps.create-issue.outputs.url }}"
   run-autotests:
     uses: ./.github/workflows/testing.yml
-  # update-issue: 
+  # update-issue:
   #   needs: [create-issue, run-autotests]
   #   runs-on: ubuntu-latest
   #   steps:
@@ -58,4 +59,3 @@ jobs:
   #       with:
   #           update_existing: true
   #           search_existing: all
-      
