@@ -20,7 +20,7 @@ jobs:
         id: previoustag
         uses: jimschubert/query-tag-action@v1
         with:
-          include: v\d+
+          include: 'v\d+'
           commit-ish: 'HEAD~'
           skip-unshallow: 'true'
       - name: Generate changelog
