@@ -21,9 +21,13 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run unit tests
+        id: run-unit
         run: npm test
+        continue-on-error: true
+      - name: Check on fail
+        if: steps.run-unit.outcome != 'success'
+        run: exit 1
       - name: Set exit code to unit_result
-        if: success() || failure()
         id: unit
         run: |
           if [ "$?" != "0" ]; then
