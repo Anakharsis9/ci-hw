@@ -34,5 +34,5 @@ jobs:
           ISSUE_ID=$(gh issue list --json number,title,labels -q \
             ".[] | select(.title == \"${ISSUE_TITLE}\" and .labels[].name == \"RELEASE\") | .number")
           if [ ! -z "$ISSUE_ID" ]; then
-            gh issue close $ISSUE_ID -c "[Deployed to](https://anakharsis9.github.io/ci-hw/)" -r "completed"
+            gh issue close $ISSUE_ID -c "Deployed to [https://anakharsis9.github.io/ci-hw/](https://anakharsis9.github.io/ci-hw/)" -r "completed"
           fi
