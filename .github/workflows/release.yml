@@ -14,13 +14,18 @@ jobs:
         uses: actions/checkout@v3
       - name: Get creation date
         run: echo "CREATION_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: 'Get Previous tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: v1
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v4.1.0
         with:
           mytoken: ${{ secrets.GITHUB_TOKEN }}
           head-ref: ${{ github.ref_name }}
-          base-ref: 'v4'
+          base-ref: ${{ steps.previoustag.outputs.tag }}
       - name: Create an issue
         id: create-issue
         uses: JasonEtco/create-an-issue@v2.9.1
