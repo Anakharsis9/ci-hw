@@ -21,6 +21,7 @@ jobs:
       - name: Run unit tests
         run: npm test
       - name: Set exit code to unit_result
+        if: success() || failure()
         id: unit
         run: |
           if [ "$?" != "0" ]; then
@@ -42,6 +43,7 @@ jobs:
       - name: Run e2e tests
         run: npm run e2e
       - name: Set exit code to e2e_result
+        if: success() || failure()
         id: e2e
         run: |
           if [ "$?" != "0" ]; then
@@ -61,6 +63,7 @@ jobs:
       - name: Run eslint
         run: npm run lint
       - name: Set exit code to lint_result
+        if: success() || failure()
         id: lint
         run: |
           if [ "$?" != "0" ]; then
