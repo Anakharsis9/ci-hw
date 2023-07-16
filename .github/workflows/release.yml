@@ -16,16 +16,16 @@ jobs:
         run: echo "CREATION_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - name: 'Get Previous tag'
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: younited/get-previous-tag-action@v1.0.0
         with:
-          fallback: v1
+          match: v\d+
       - name: Generate changelog
         id: changelog
         uses: metcalfc/changelog-generator@v4.1.0
         with:
           mytoken: ${{ secrets.GITHUB_TOKEN }}
           head-ref: ${{ github.ref_name }}
-          base-ref: ${{ steps.previoustag.outputs.tag }}
+          base-ref: ${{ steps.previoustag.outputs.previous-tag }}
       - name: Create an issue
         id: create-issue
         uses: JasonEtco/create-an-issue@v2.9.1
