@@ -7,4 +7,7 @@ labels: RELEASE
 - Дата и время создания: {{ env.CREATION_DATE }}
 - Changelog:
   - {{ env.changelog }}
-- Результаты автотестов: тесты запущены...
+- Результаты автотестов:
+  - Unit тесты: {{ env.unit_result }}
+  - E2e тесты: {{ env.e2e_result }}
+  - Eslint: {{ env.lint_result }}
