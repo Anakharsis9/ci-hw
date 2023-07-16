@@ -21,21 +21,17 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run unit tests
-        id: run-unit
-        run: npm test
-        continue-on-error: true
-      - name: Check on fail
-        if: steps.run-unit.outcome != 'success'
-        run: exit 1
-      - name: Set exit code to unit_result
         id: unit
         run: |
+          set +e
+          npm test
           if [ "$?" != "0" ]; then
             echo "unit_result=Test failed" >> $GITHUB_OUTPUT
           else
             echo "unit_result=Test passed" >> $GITHUB_OUTPUT
           fi
       - name: Set workflow_link
+        if: success() || failure()
         id: workflow_link
         run: echo "workflow_link=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}/jobs/${{github.job}}" >> $GITHUB_OUTPUT
     outputs: 
