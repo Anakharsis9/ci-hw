@@ -2,7 +2,7 @@ name: check autotests
 on:
   workflow_call:
     outputs:
-      unit_link:
+      workflow_link:
         value: ${{ jobs.run-unit-tests.outputs.workflow_link }}
       unit_result:
         value: ${{ jobs.run-unit-tests.outputs.unit_result }}
@@ -33,7 +33,7 @@ jobs:
       - name: Set workflow_link
         if: success() || failure()
         id: workflow_link
-        run: echo "workflow_link=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}/jobs/${{github.job}}" >> $GITHUB_OUTPUT
+        run: echo "workflow_link=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}" >> $GITHUB_OUTPUT
     outputs: 
       unit_result: ${{ steps.unit.outputs.unit_result }}
       workflow_link: ${{ steps.workflow_link.outputs.workflow_link }}
@@ -47,11 +47,10 @@ jobs:
       - name: Install playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
-        run: npm run e2e
-      - name: Set exit code to e2e_result
-        if: success() || failure()
         id: e2e
         run: |
+          set +e
+          npm run e2e
           if [ "$?" != "0" ]; then
             echo "e2e_result=Test failed" >> $GITHUB_OUTPUT
           else
@@ -67,11 +66,10 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run eslint
-        run: npm run lint
-      - name: Set exit code to lint_result
-        if: success() || failure()
         id: lint
         run: |
+          set +e
+          npm run lint
           if [ "$?" != "0" ]; then
             echo "lint_result=Test failed" >> $GITHUB_OUTPUT
           else

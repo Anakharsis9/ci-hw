@@ -39,8 +39,8 @@ jobs:
           author: ${{ github.actor }}
           changelog: ${{ steps.changelog.outputs.changelog }}
           creation_date: ${{ env.CREATION_DATE }}
+          workflow_link: ${{ needs.run-autotests.outputs.workflow_link }}
           unit_result: ${{ needs.run-autotests.outputs.unit_result }}
-          unit_link: ${{ needs.run-autotests.outputs.unit_link }}
           e2e_result: ${{ needs.run-autotests.outputs.e2e_result }}
           lint_result: ${{ needs.run-autotests.outputs.lint_result }}
         with:

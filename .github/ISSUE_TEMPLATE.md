@@ -9,7 +9,7 @@ labels: RELEASE
 
 {{ env.changelog }}
 
-- Результаты автотестов:
-  - Unit тесты: {{ env.unit_result }} ссылка на job: {{ env.unit_link}}
+- Результаты автотестов по ссылке {{ env.workflow_link}}:
+  - Unit тесты: {{ env.unit_result }}
   - E2e тесты: {{ env.e2e_result }}
   - Eslint: {{ env.lint_result }}
