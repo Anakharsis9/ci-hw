@@ -22,20 +22,19 @@ jobs:
         run: npm ci
       - name: Run unit tests
         id: unit
-        run: |
-          set +e
-          npm test
-          if [ "$?" != "0" ]; then
-            echo "unit_result=Test failed" >> $GITHUB_OUTPUT
-          else
-            echo "unit_result=Test passed" >> $GITHUB_OUTPUT
-          fi
+        run: npm test
+      - name: Set success
+        if: success()
+        run: echo "unit_result=Test passed" >> $GITHUB_ENV
+      - name: Set fail
+        if: failure()
+        run: echo "unit_result=Test failed" >> $GITHUB_ENV
       - name: Set workflow_link
         if: success() || failure()
         id: workflow_link
         run: echo "workflow_link=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}" >> $GITHUB_OUTPUT
-    outputs: 
-      unit_result: ${{ steps.unit.outputs.unit_result }}
+    outputs:
+      unit_result: ${{ env.unit_result }}
       workflow_link: ${{ steps.workflow_link.outputs.workflow_link }}
   run-e2e-tests:
     runs-on: ubuntu-latest
@@ -47,20 +46,16 @@ jobs:
       - name: Install playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run e2e tests
-        run: |
-          set +e
-          npm run e2e
-      - name: Set exit code to e2e_result
-        if: success() || failure()
         id: e2e
         run: |
           set +e
+          npm run e2e
           if [ "$?" != "0" ]; then
             echo "e2e_result=Test failed" >> $GITHUB_OUTPUT
           else
             echo "e2e_result=Test passed" >> $GITHUB_OUTPUT
           fi
-    outputs: 
+    outputs:
       e2e_result: ${{ steps.e2e.outputs.e2e_result }}
   run-eslint:
     runs-on: ubuntu-latest
@@ -70,14 +65,10 @@ jobs:
       - name: Install packages
         run: npm ci
       - name: Run eslint
-        run: |
-          set +e
-          npm run lint
-      - name: Set exit code to lint_result
-        if: success() || failure()
         id: lint
         run: |
           set +e
+          npm run lint
           if [ "$?" != "0" ]; then
             echo "lint_result=Test failed" >> $GITHUB_OUTPUT
           else
