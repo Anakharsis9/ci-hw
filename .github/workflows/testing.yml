@@ -24,9 +24,9 @@ jobs:
         id: unit
         run: |
           if [ "$?" != "0" ]; then
-            echo "unit_result='Test failed'" >> $GITHUB_OUTPUT
+            echo "unit_result=Test failed" >> $GITHUB_OUTPUT
           else
-            echo "unit_result='Test passed'" >> $GITHUB_OUTPUT
+            echo "unit_result=Test passed" >> $GITHUB_OUTPUT
           fi
     outputs: 
       unit_result: ${{ steps.unit.outputs.unit_result }}
@@ -45,9 +45,9 @@ jobs:
         id: e2e
         run: |
           if [ "$?" != "0" ]; then
-            echo "e2e_result='Test failed'" >> $GITHUB_OUTPUT
+            echo "e2e_result=Test failed" >> $GITHUB_OUTPUT
           else
-            echo "e2e_result='Test passed'" >> $GITHUB_OUTPUT
+            echo "e2e_result=Test passed" >> $GITHUB_OUTPUT
           fi
     outputs: 
       e2e_result: ${{ steps.e2e.outputs.e2e_result }}
@@ -64,9 +64,9 @@ jobs:
         id: lint
         run: |
           if [ "$?" != "0" ]; then
-            echo "lint_result='Test failed'" >> $GITHUB_OUTPUT
+            echo "lint_result=Test failed" >> $GITHUB_OUTPUT
           else
-            echo "lint_result='Test passed'" >> $GITHUB_OUTPUT
+            echo "lint_result=Test passed" >> $GITHUB_OUTPUT
           fi
     outputs:
       lint_result: ${{ steps.lint.outputs.lint_result }}
