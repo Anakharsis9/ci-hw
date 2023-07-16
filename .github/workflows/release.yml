@@ -21,7 +21,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ github.ref_name }}
           author: ${{ github.actor }}
-          date: $CREATION_DATE
         with:
             update_existing: true
             search_existing: all
