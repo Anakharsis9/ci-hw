@@ -6,7 +6,9 @@ labels: RELEASE
 - Версия: {{ env.version }}
 - Дата и время создания: {{ env.CREATION_DATE }}
 - Changelog:
-  - {{ env.changelog }}
+
+{{ env.changelog }}
+
 - Результаты автотестов:
   - Unit тесты: {{ env.unit_result }}
   - E2e тесты: {{ env.e2e_result }}
