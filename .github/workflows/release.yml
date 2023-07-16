@@ -10,6 +10,7 @@ jobs:
   run-autotests:
     uses: ./.github/workflows/testing.yml
   create-issue:
+    if: success() || failure()
     needs: run-autotests
     runs-on: ubuntu-latest
     steps:
