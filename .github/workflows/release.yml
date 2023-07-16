@@ -7,7 +7,10 @@ on:
     tags:
       - v\d+
 jobs:
+  run-autotests:
+    uses: ./.github/workflows/testing.yml
   create-issue:
+    needs: run-autotests
     runs-on: ubuntu-latest
     steps:
       - name: Get creation date
@@ -38,21 +41,4 @@ jobs:
           update_existing: true
           search_existing: all
       - run: "echo Created ${{ steps.create-issue.outputs.url }}"
-  run-autotests:
-    uses: ./.github/workflows/testing.yml
-  # update-issue:
-  #   needs: [create-issue, run-autotests]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Update an issue
-  #       id: update-issue
-  #       uses: JasonEtco/create-an-issue@v2.9.1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         version: ${{ github.ref_name }}
-  #         author: ${{ github.actor }}
-  #       with:
-  #           update_existing: true
-  #           search_existing: all
+  
