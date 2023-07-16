@@ -14,7 +14,12 @@ jobs:
       - name: Run unit tests
         run: npm test
       - name: Set exit code to unit_result
-        run: echo "unit_result=$?" > $GITHUB_ENV
+        run: |
+          if [ "$?" != "0" ]; then
+            echo "lint_result='Test failed'" > $GITHUB_ENV
+          else
+            echo "lint_result='Test passed'" > $GITHUB_ENV
+          fi
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +32,12 @@ jobs:
       - name: Run e2e tests
         run: npm run e2e
       - name: Set exit code to e2e_result
-        run: echo "e2e_result=$?" > $GITHUB_ENV
+        run: |
+          if [ "$?" != "0" ]; then
+            echo "lint_result='Test failed'" > $GITHUB_ENV
+          else
+            echo "lint_result='Test passed'" > $GITHUB_ENV
+          fi
   run-eslint:
     runs-on: ubuntu-latest
     steps:
@@ -38,4 +48,9 @@ jobs:
       - name: Run eslint
         run: npm run lint
       - name: Set exit code to lint_result
-        run: echo "lint_result=$?" > $GITHUB_ENV
+        run: |
+          if [ "$?" != "0" ]; then
+            echo "lint_result='Test failed'" > $GITHUB_ENV
+          else
+            echo "lint_result='Test passed'" > $GITHUB_ENV
+          fi
