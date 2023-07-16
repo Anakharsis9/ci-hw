@@ -5,5 +5,6 @@ labels: RELEASE
 - Автор релиза: {{ env.author }}
 - Версия: {{ env.version }}
 - Дата и время создания: {{ env.CREATION_DATE }}
-- Changelog: {{ env.changelog }}
+- Changelog:
+  - {{ env.changelog }}
 - Результаты автотестов: тесты запущены...
