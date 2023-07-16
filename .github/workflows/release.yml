@@ -37,6 +37,10 @@ jobs:
           version: ${{ github.ref_name }}
           author: ${{ github.actor }}
           changelog: ${{ steps.changelog.outputs.changelog }}
+          creation_date: ${{ env.CREATION_DATE }}
+          unit_result: ${{ needs.run-autotests.outputs.unit_result }}
+          e2e_result: ${{ needs.run-autotests.outputs.e2e_result }}
+          lint_result: ${{ needs.run-autotests.outputs.lint_result }}
         with:
           update_existing: true
           search_existing: all
