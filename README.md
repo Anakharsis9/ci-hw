@@ -8,7 +8,7 @@
 npm ci
 
 # включить git hooks для проверки коммитов
-npm prepare
+npm run prepare
 
 ```
 
