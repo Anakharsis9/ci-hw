@@ -14,7 +14,7 @@ npm run prepare
 
 ## Проверка коммитов
 
-Я настроила pre-commit hook. Чтобы его проверить, попробуй что либо закомитить не по conventional-commitlint.
+Я настроила commit-msg hook. Чтобы его проверить, попробуй что либо закомитить не по conventional-commitlint.
 
 ## Workflow тестов
 
